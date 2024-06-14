@@ -56,6 +56,7 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
     final chopperClient = getChopperClientContent(
       className,
       swaggerRoot.host,
+      swaggerRoot.schemes.isEmpty ? 'http' : swaggerRoot.schemes.first,
       swaggerRoot.basePath,
     );
 
@@ -1405,10 +1406,11 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
   String getChopperClientContent(
     String className,
     String host,
+    String scheme,
     String basePath,
   ) {
     final baseUrlString = options.withBaseUrl
-        ? "baseUrl:  baseUrl ?? Uri.parse('http://$host$basePath')"
+        ? "baseUrl:  baseUrl ?? Uri.parse('$scheme://$host$basePath')"
         : 'baseUrl: baseUrl';
 
     final converterString = options.withConverter
