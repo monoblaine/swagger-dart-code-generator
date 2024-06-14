@@ -39,6 +39,7 @@ class GeneratorOptions {
     this.multipartFileType = 'List<int>',
     this.urlencodedFileType = 'Map<String, String>',
     this.generateFirstSucceedResponse = true,
+    this.authorizationHeaderValue = '',
   });
 
   /// Build options from a JSON map.
@@ -78,6 +79,7 @@ class GeneratorOptions {
   final List<String> importPaths;
   final String customReturnType;
   final List<String> excludePaths;
+  final String authorizationHeaderValue;
 
   /// Convert this options instance to JSON.
   Map<String, dynamic> toJson() => _$GeneratorOptionsToJson(this);
