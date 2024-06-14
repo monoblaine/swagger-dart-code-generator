@@ -117,7 +117,8 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
           (p) => p
             ..named = true
             ..type = Reference('List<Interceptor>?')
-            ..name = 'interceptors',
+            ..name = 'interceptors'
+            ..defaultTo = Code('defaultInterceptors'),
         ))
         ..body = Code(body),
     );

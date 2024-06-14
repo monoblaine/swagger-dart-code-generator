@@ -96,6 +96,8 @@ GeneratorOptions _$GeneratorOptionsFromJson(Map json) => GeneratorOptions(
           json['urlencoded_file_type'] as String? ?? 'Map<String, String>',
       generateFirstSucceedResponse:
           json['generate_first_succeed_response'] as bool? ?? true,
+      authorizationHeaderValue:
+          json['authorization_header_value'] as String? ?? '',
     );
 
 Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
@@ -136,6 +138,7 @@ Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
       'import_paths': instance.importPaths,
       'custom_return_type': instance.customReturnType,
       'exclude_paths': instance.excludePaths,
+      'authorization_header_value': instance.authorizationHeaderValue,
     };
 
 DefaultValueMap _$DefaultValueMapFromJson(Map<String, dynamic> json) =>
