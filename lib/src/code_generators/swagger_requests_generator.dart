@@ -213,7 +213,9 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
         final method = Method((m) => m
           ..optionalParameters.addAll(parameters)
           ..docs.add(_getCommentsForMethod(
-            methodDescription: swaggerRequest.summary,
+            methodDescription: swaggerRequest.description.isNotEmpty
+                ? swaggerRequest.description
+                : swaggerRequest.summary,
             parameters: swaggerRequest.parameters,
             componentsParameters: swaggerRoot.components?.parameters ?? {},
           ))
