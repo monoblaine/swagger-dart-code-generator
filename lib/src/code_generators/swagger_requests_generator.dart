@@ -193,8 +193,8 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
           return p.annotations.any((p0) => p0.call([]).toString().contains('symbol=Part'));
         });
 
-        final isUrlencoded =
-            swaggerRequest.requestBody?.content?.isUrlencoded == true;
+        final isUrlencoded = parameters.any((p) =>
+            p.type != null && p.type!.symbol == options.urlencodedFileType);
 
         var annotationPath = path;
         if (options.addBasePathToRequests) {
@@ -865,8 +865,7 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
               ..name = kBody
               ..named = true
               ..required = true
-              ..type = Reference(getValidatedClassName(
-                  requestBody.content!.schema!.ref.getRef()))
+              ..type = Reference(options.urlencodedFileType)
               ..named = true
               ..annotations.add(
                 refer(kBody.pascalCase).call([]),
