@@ -178,7 +178,10 @@ abstract class SwaggerGeneratorBase {
     path = path.split('}').map((e) => e.capitalize).join();
     path = path.split(',').map((e) => e.capitalize).join();
 
-    final correctedPath = getValidatedClassName(path);
+    final correctedPath = getValidatedClassName(path).replaceFirst(
+      RegExp('^(Get|Post1|Post2)'),
+      '',
+    );
 
     return '${correctedPath.capitalize}${requestType.capitalize}'.camelCase;
   }
