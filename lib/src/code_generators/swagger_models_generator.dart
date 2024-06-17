@@ -1312,7 +1312,7 @@ static $returnType $fromJsonFunction($valueType? value) => $enumNameCamelCase$fr
       }
     }
 
-    return results.join('\n');
+    return results.join('\n\n');
   }
 
   Map<String, String> generateBasicTypesMapFromSchemas(SwaggerRoot root) {
@@ -1499,9 +1499,9 @@ String toString() => jsonEncode(this);
 class $validatedClassName{
 \tconst $validatedClassName($generatedConstructorProperties);\n
 \t$fromJson\n
+\tstatic const fromJsonFactory = _\$${validatedClassName}FromJson;\n
 \t$toJson\n
 $generatedProperties
-\tstatic const fromJsonFactory = _\$${validatedClassName}FromJson;
 
 $equalsOverride
 
@@ -1524,6 +1524,7 @@ $copyWithMethod
         options.generateToJsonFor.contains(validatedClassName)) {
       return '''
 \tstatic const toJsonFactory = _\$${validatedClassName}ToJson;
+
 \tMap<String, dynamic> toJson() => _\$${validatedClassName}ToJson(this);
 ''';
     }
@@ -1645,10 +1646,10 @@ $copyWithMethod
             .join(',\n');
 
     final copyWith =
-        '$validatedClassName copyWith({$spittedCopyWithPropertiesJoined}) { return $validatedClassName($splittedCopyWithPropertiesNamesContent); }';
+        '$validatedClassName copyWith({$spittedCopyWithPropertiesJoined,}) { return $validatedClassName($splittedCopyWithPropertiesNamesContent,); }';
 
     final copyWithWrapped =
-        '$validatedClassName copyWithWrapped({$spittedCopyWithWrappedPropertiesJoined}) { return $validatedClassName($splittedCopyWithWrappedPropertiesNamesContent); }';
+        '$validatedClassName copyWithWrapped({$spittedCopyWithWrappedPropertiesJoined,}) { return $validatedClassName($splittedCopyWithWrappedPropertiesNamesContent,); }';
 
     return 'extension \$${validatedClassName}Extension on $validatedClassName { $copyWith $copyWithWrapped}';
   }
