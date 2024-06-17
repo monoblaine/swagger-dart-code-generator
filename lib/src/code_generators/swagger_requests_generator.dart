@@ -487,8 +487,12 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
         },
       ),
       if (isUrlencoded)
-        refer(kFactoryConverter.pascalCase)
-            .call([], {'request': refer('FormUrlEncodedConverter.requestFactory')}),
+        refer(kFactoryConverter.pascalCase).call(
+          [],
+          {
+            'request': refer('FormUrlEncodedConverter.requestFactory'),
+          },
+        ),
       if (isMultipart)
         refer(kMultipart.pascalCase).call(
           [],
