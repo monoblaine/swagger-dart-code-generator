@@ -487,11 +487,11 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
     allModels.toSet().forEach((model) {
       final validatedName = getValidatedClassName(model);
       allModelsString +=
-          'generatedMapping.putIfAbsent($validatedName, () => $validatedName.fromJsonFactory);\n';
+          'generatedMapping.putIfAbsent($validatedName, () => $validatedName.fromJsonFactory,);\n';
     });
 
     return Code(
-        '$allModelsString\nreturn _$publicMethodName($parametersListString);');
+        '$allModelsString\nreturn _$publicMethodName($parametersListString${parametersListString.isEmpty ? '' : ','});');
   }
 
   List<Expression> _getMethodAnnotation({
@@ -1432,7 +1432,7 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
       client: httpClient,
       authenticator: authenticator,
       errorConverter: errorConverter,
-      $baseUrlString);
+      $baseUrlString,);
     return _\$$className(newClient);
 ''';
     return chopperClientBody;
