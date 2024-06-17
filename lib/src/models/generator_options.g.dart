@@ -130,7 +130,6 @@ Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
       'import_paths': instance.importPaths,
       'custom_return_type': instance.customReturnType,
       'exclude_paths': instance.excludePaths,
-      'generate_first_succeed_response': instance.generateFirstSucceedResponse,
       'authorization_header_value': instance.authorizationHeaderValue,
     };
 
