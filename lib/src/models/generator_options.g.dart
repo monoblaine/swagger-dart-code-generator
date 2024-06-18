@@ -238,6 +238,9 @@ Map<String, dynamic> _$CustomRequestConverterRuleToJson(
 ClassConfigItem _$ClassConfigItemFromJson(Map<String, dynamic> json) =>
     ClassConfigItem(
       className: json['class_name'] as String? ?? '',
+      defaultChopperClientClassName:
+          json['default_chopper_client_class_name'] as String? ??
+              'ChopperClient',
       defaultChopperClientConverter:
           json['default_chopper_client_converter'] as String? ?? '',
       factoryConverterAnnotationsDisabled:
@@ -247,6 +250,8 @@ ClassConfigItem _$ClassConfigItemFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ClassConfigItemToJson(ClassConfigItem instance) =>
     <String, dynamic>{
       'class_name': instance.className,
+      'default_chopper_client_class_name':
+          instance.defaultChopperClientClassName,
       'default_chopper_client_converter':
           instance.defaultChopperClientConverter,
       'factory_converter_annotations_disabled':
