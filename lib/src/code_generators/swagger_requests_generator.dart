@@ -1375,7 +1375,7 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
       return _\$$className(client);
     }
 
-    final newClient = ChopperClient(
+    final newClient = ${classConfig?.defaultChopperClientClassName ?? 'ChopperClient'}(
       services: [_\$$className()],
       $converterString
       interceptors: interceptors ?? [],

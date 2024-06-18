@@ -233,6 +233,7 @@ class CustomRequestConverterRule {
 class ClassConfigItem {
   ClassConfigItem({
     required this.className,
+    required this.defaultChopperClientClassName,
     required this.defaultChopperClientConverter,
     required this.factoryConverterAnnotationsDisabled,
   });
@@ -243,6 +244,9 @@ class ClassConfigItem {
 
   @JsonKey(defaultValue: '')
   final String className;
+
+  @JsonKey(defaultValue: 'ChopperClient')
+  final String defaultChopperClientClassName;
 
   @JsonKey(defaultValue: '')
   final String defaultChopperClientConverter;
