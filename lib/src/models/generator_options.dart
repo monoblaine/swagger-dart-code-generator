@@ -227,8 +227,8 @@ class ClassConfigItem {
   @JsonKey(defaultValue: 'ChopperClient')
   final String defaultChopperClientClassName;
 
-  @JsonKey(defaultValue: '')
-  final String defaultChopperClientConverter;
+  @JsonKey()
+  final String? defaultChopperClientConverter;
 
   @JsonKey(defaultValue: false)
   final bool factoryConverterAnnotationsDisabled;

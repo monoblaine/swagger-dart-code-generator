@@ -242,7 +242,7 @@ ClassConfigItem _$ClassConfigItemFromJson(Map<String, dynamic> json) =>
           json['default_chopper_client_class_name'] as String? ??
               'ChopperClient',
       defaultChopperClientConverter:
-          json['default_chopper_client_converter'] as String? ?? '',
+          json['default_chopper_client_converter'] as String?,
       factoryConverterAnnotationsDisabled:
           json['factory_converter_annotations_disabled'] as bool? ?? false,
     );
