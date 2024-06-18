@@ -49,7 +49,7 @@ const Iterable<dynamic>? defaultInterceptors = [
     ${(options.authorizationHeaderValue.isEmpty ? '' : "'Authorization': '${options.authorizationHeaderValue}',")}
     'Accept-Language': 'tr,en-US;q=0.9,en;q=0.8',
     'X-Requested-With': 'XMLHttpRequest'
-  })
+  }),
 ];
 ''';
   }
