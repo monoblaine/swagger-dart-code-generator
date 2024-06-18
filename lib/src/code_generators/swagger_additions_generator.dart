@@ -102,6 +102,10 @@ ${options.overrideToString ? "import 'dart:convert';" : ''}
       result.write("import '$swaggerFileName.models.swagger.dart';");
     }
 
+    for (var pathToFile in options.swaggerFileExtraImports) {
+      result.write("import '$pathToFile';");
+    }
+
     result.write(overridenModels);
 
     if (chopperImports.isNotEmpty) {

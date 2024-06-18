@@ -475,6 +475,9 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
     required bool isDeprecated,
     required bool includeNullQueryVars,
   }) {
+    final customReqConverterCls = options.customRequestConverterRules
+        .firstWhereOrNull((r) => r.path == path)
+        ?.converterClassName;
     return [
       if (isDeprecated) refer('deprecated'),
       refer(requestType.toUpperCase()).call(
@@ -486,7 +489,14 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
           if (includeNullQueryVars) kIncludeNullQueryVars: refer(true.toString()),
         },
       ),
-      if (isUrlencoded)
+      if (customReqConverterCls != null)
+        refer(kFactoryConverter.pascalCase).call(
+          [],
+          {
+            'request': refer('$customReqConverterCls.requestFactory'),
+          },
+        )
+      else if (isUrlencoded)
         refer(kFactoryConverter.pascalCase).call(
           [],
           {
