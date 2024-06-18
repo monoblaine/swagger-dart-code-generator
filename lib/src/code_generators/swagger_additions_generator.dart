@@ -43,12 +43,12 @@ final Map<Type, Object Function(Map<String, dynamic>)> $mappingVariableName = {
 
 const Iterable<dynamic>? defaultInterceptors = [
   HeadersInterceptor({
-    "Cache-Control": "no-cache",
-    "User-Agent": "Alangoya",
-    "Connection": "keep-alive",
-    ${(options.authorizationHeaderValue.isEmpty ? '' : '"Authorization": "${options.authorizationHeaderValue}",')}
-    "Accept-Language": "tr,en-US;q=0.9,en;q=0.8",
-    "X-Requested-With": "XMLHttpRequest"
+    'Cache-Control': 'no-cache',
+    'User-Agent': 'Alangoya',
+    'Connection': 'keep-alive',
+    ${(options.authorizationHeaderValue.isEmpty ? '' : "'Authorization': '${options.authorizationHeaderValue}',")}
+    'Accept-Language': 'tr,en-US;q=0.9,en;q=0.8',
+    'X-Requested-With': 'XMLHttpRequest'
   })
 ];
 ''';
