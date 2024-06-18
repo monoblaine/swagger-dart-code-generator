@@ -92,6 +92,17 @@ GeneratorOptions _$GeneratorOptionsFromJson(Map json) => GeneratorOptions(
           json['generate_first_succeed_response'] as bool? ?? true,
       authorizationHeaderValue:
           json['authorization_header_value'] as String? ?? '',
+      customRequestConverterRules:
+          (json['custom_request_converter_rules'] as List<dynamic>?)
+                  ?.map((e) => CustomRequestConverterRule.fromJson(
+                      Map<String, dynamic>.from(e as Map)))
+                  .toList() ??
+              const <CustomRequestConverterRule>[],
+      swaggerFileExtraImports:
+          (json['swagger_file_extra_imports'] as List<dynamic>?)
+                  ?.map((e) => e as String)
+                  .toList() ??
+              const <String>[],
     );
 
 Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
@@ -131,6 +142,8 @@ Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
       'custom_return_type': instance.customReturnType,
       'exclude_paths': instance.excludePaths,
       'authorization_header_value': instance.authorizationHeaderValue,
+      'custom_request_converter_rules': instance.customRequestConverterRules,
+      'swagger_file_extra_imports': instance.swaggerFileExtraImports,
     };
 
 DefaultValueMap _$DefaultValueMapFromJson(Map<String, dynamic> json) =>
@@ -200,4 +213,18 @@ Map<String, dynamic> _$OverridenModelsItemToJson(
       'file_name': instance.fileName,
       'overriden_models': instance.overridenModels,
       'import_url': instance.importUrl,
+    };
+
+CustomRequestConverterRule _$CustomRequestConverterRuleFromJson(
+        Map<String, dynamic> json) =>
+    CustomRequestConverterRule(
+      path: json['path'] as String? ?? '',
+      converterClassName: json['converter_class_name'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$CustomRequestConverterRuleToJson(
+        CustomRequestConverterRule instance) =>
+    <String, dynamic>{
+      'path': instance.path,
+      'converter_class_name': instance.converterClassName,
     };

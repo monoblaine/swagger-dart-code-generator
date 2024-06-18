@@ -40,6 +40,8 @@ class GeneratorOptions {
     this.urlencodedFileType = 'Map<String, String>',
     this.generateFirstSucceedResponse = true,
     this.authorizationHeaderValue = '',
+    this.customRequestConverterRules = const <CustomRequestConverterRule>[],
+    this.swaggerFileExtraImports = const <String>[],
   });
 
   /// Build options from a JSON map.
@@ -80,6 +82,8 @@ class GeneratorOptions {
   final String customReturnType;
   final List<String> excludePaths;
   final String authorizationHeaderValue;
+  final List<CustomRequestConverterRule> customRequestConverterRules;
+  final List<String> swaggerFileExtraImports;
 
   /// Convert this options instance to JSON.
   Map<String, dynamic> toJson() => _$GeneratorOptionsToJson(this);
@@ -179,4 +183,25 @@ class OverridenModelsItem {
 
   factory OverridenModelsItem.fromJson(Map<String, dynamic> json) =>
       _$OverridenModelsItemFromJson(json);
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class CustomRequestConverterRule {
+  CustomRequestConverterRule({
+    required this.path,
+    required this.converterClassName,
+  });
+
+  /// Build a default value map from a JSON map.
+  factory CustomRequestConverterRule.fromJson(Map<String, dynamic> json) =>
+      _$CustomRequestConverterRuleFromJson(json);
+
+  @JsonKey(defaultValue: '')
+  final String path;
+
+  @JsonKey(defaultValue: '')
+  final String converterClassName;
+
+  /// Convert this default value map instance to JSON.
+  Map<String, dynamic> toJson() => _$CustomRequestConverterRuleToJson(this);
 }

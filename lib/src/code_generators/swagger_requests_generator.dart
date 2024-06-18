@@ -502,6 +502,9 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
     required bool isUrlencoded,
     required bool isDeprecated,
   }) {
+    final customReqConverterCls = options.customRequestConverterRules
+        .firstWhereOrNull((r) => r.path == path)
+        ?.converterClassName;
     return [
       if (isDeprecated) refer('deprecated'),
       refer(requestType.pascalCase).call(
@@ -514,7 +517,14 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
             'headers': refer('{contentTypeKey: formEncodedHeaders}')
         },
       ),
-      if (isUrlencoded)
+      if (customReqConverterCls != null)
+        refer(kFactoryConverter.pascalCase).call(
+          [],
+          {
+            'request': refer('$customReqConverterCls.requestFactory'),
+          },
+        )
+      else if (isUrlencoded)
         refer(kFactoryConverter.pascalCase).call(
           [],
           {
