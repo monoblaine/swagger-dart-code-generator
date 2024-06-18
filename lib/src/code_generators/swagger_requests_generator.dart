@@ -32,11 +32,14 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
     required String fileName,
     required List<EnumModel> allEnums,
   }) {
+    final classConfig =
+        options.classConfigs.firstWhereOrNull((c) => c.className == className);
     final service = _generateService(
       swaggerRoot,
       allEnums,
       className,
       fileName,
+      classConfig,
     );
 
     return service.accept(DartEmitter()).toString();
@@ -47,10 +50,12 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
     List<EnumModel> allEnums,
     String className,
     String fileName,
+    ClassConfigItem? classConfig,
   ) {
     final allMethodsContent = _getAllMethodsContent(
       swaggerRoot: swaggerRoot,
       allEnums: allEnums,
+      classConfig: classConfig,
     );
 
     final chopperClient = getChopperClientContent(
@@ -58,6 +63,7 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
       swaggerRoot.host,
       swaggerRoot.schemes.isEmpty ? 'http' : swaggerRoot.schemes.first,
       swaggerRoot.basePath,
+      classConfig,
     );
 
     return Class(
@@ -130,6 +136,7 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
   List<Method> _getAllMethodsContent({
     required SwaggerRoot swaggerRoot,
     required List<EnumModel> allEnums,
+    required ClassConfigItem? classConfig,
   }) {
     final methods = <Method>[];
 
@@ -227,6 +234,7 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
             isMultipart: isMultipart,
             isUrlencoded: isUrlencoded,
             isDeprecated: swaggerRequest.deprecated,
+            classConfig: classConfig,
           ))
           ..returns = Reference(returns));
 
@@ -501,10 +509,13 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
     required bool isMultipart,
     required bool isUrlencoded,
     required bool isDeprecated,
+    required ClassConfigItem? classConfig,
   }) {
     final customReqConverterCls = options.customRequestConverterRules
         .firstWhereOrNull((r) => r.path == path)
         ?.converterClassName;
+    final factoryConverterAnnotationsDisabled =
+        classConfig?.factoryConverterAnnotationsDisabled ?? false;
     return [
       if (isDeprecated) refer('deprecated'),
       refer(requestType.pascalCase).call(
@@ -517,20 +528,21 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
             'headers': refer('{contentTypeKey: formEncodedHeaders}')
         },
       ),
-      if (customReqConverterCls != null)
-        refer(kFactoryConverter.pascalCase).call(
-          [],
-          {
-            'request': refer('$customReqConverterCls.requestFactory'),
-          },
-        )
-      else if (isUrlencoded)
-        refer(kFactoryConverter.pascalCase).call(
-          [],
-          {
-            'request': refer('FormUrlEncodedConverter.requestFactory'),
-          },
-        ),
+      if (!factoryConverterAnnotationsDisabled)
+        if (customReqConverterCls != null)
+          refer(kFactoryConverter.pascalCase).call(
+            [],
+            {
+              'request': refer('$customReqConverterCls.requestFactory'),
+            },
+          )
+        else if (isUrlencoded)
+          refer(kFactoryConverter.pascalCase).call(
+            [],
+            {
+              'request': refer('FormUrlEncodedConverter.requestFactory'),
+            },
+          ),
       if (isMultipart)
         refer(kMultipart.pascalCase).call(
           [],
@@ -1425,13 +1437,14 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
     String host,
     String scheme,
     String basePath,
+    ClassConfigItem? classConfig,
   ) {
     final baseUrlString = options.withBaseUrl
         ? "baseUrl:  baseUrl ?? Uri.parse('$scheme://$host$basePath')"
         : 'baseUrl: baseUrl';
 
     final converterString = options.withConverter
-        ? 'converter: converter ?? \$JsonSerializableConverter(),'
+        ? 'converter: converter ?? ${classConfig?.defaultChopperClientConverter ?? '\$JsonSerializableConverter'}(),'
         : 'converter: converter ?? chopper.JsonConverter(),';
 
     final chopperClientBody = '''

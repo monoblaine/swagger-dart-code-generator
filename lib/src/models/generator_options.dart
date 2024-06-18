@@ -42,6 +42,7 @@ class GeneratorOptions {
     this.authorizationHeaderValue = '',
     this.customRequestConverterRules = const <CustomRequestConverterRule>[],
     this.swaggerFileExtraImports = const <String>[],
+    this.classConfigs = const <ClassConfigItem>[],
   });
 
   /// Build options from a JSON map.
@@ -84,6 +85,7 @@ class GeneratorOptions {
   final String authorizationHeaderValue;
   final List<CustomRequestConverterRule> customRequestConverterRules;
   final List<String> swaggerFileExtraImports;
+  final List<ClassConfigItem> classConfigs;
 
   /// Convert this options instance to JSON.
   Map<String, dynamic> toJson() => _$GeneratorOptionsToJson(this);
@@ -204,4 +206,29 @@ class CustomRequestConverterRule {
 
   /// Convert this default value map instance to JSON.
   Map<String, dynamic> toJson() => _$CustomRequestConverterRuleToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class ClassConfigItem {
+  ClassConfigItem({
+    required this.className,
+    required this.defaultChopperClientConverter,
+    required this.factoryConverterAnnotationsDisabled,
+  });
+
+  /// Build a default value map from a JSON map.
+  factory ClassConfigItem.fromJson(Map<String, dynamic> json) =>
+      _$ClassConfigItemFromJson(json);
+
+  @JsonKey(defaultValue: '')
+  final String className;
+
+  @JsonKey(defaultValue: '')
+  final String defaultChopperClientConverter;
+
+  @JsonKey(defaultValue: false)
+  final bool factoryConverterAnnotationsDisabled;
+
+  /// Convert this default value map instance to JSON.
+  Map<String, dynamic> toJson() => _$ClassConfigItemToJson(this);
 }

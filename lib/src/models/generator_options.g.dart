@@ -103,6 +103,11 @@ GeneratorOptions _$GeneratorOptionsFromJson(Map json) => GeneratorOptions(
                   ?.map((e) => e as String)
                   .toList() ??
               const <String>[],
+      classConfigs: (json['class_configs'] as List<dynamic>?)
+              ?.map((e) =>
+                  ClassConfigItem.fromJson(Map<String, dynamic>.from(e as Map)))
+              .toList() ??
+          const <ClassConfigItem>[],
     );
 
 Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
@@ -144,6 +149,7 @@ Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
       'authorization_header_value': instance.authorizationHeaderValue,
       'custom_request_converter_rules': instance.customRequestConverterRules,
       'swagger_file_extra_imports': instance.swaggerFileExtraImports,
+      'class_configs': instance.classConfigs,
     };
 
 DefaultValueMap _$DefaultValueMapFromJson(Map<String, dynamic> json) =>
@@ -227,4 +233,22 @@ Map<String, dynamic> _$CustomRequestConverterRuleToJson(
     <String, dynamic>{
       'path': instance.path,
       'converter_class_name': instance.converterClassName,
+    };
+
+ClassConfigItem _$ClassConfigItemFromJson(Map<String, dynamic> json) =>
+    ClassConfigItem(
+      className: json['class_name'] as String? ?? '',
+      defaultChopperClientConverter:
+          json['default_chopper_client_converter'] as String? ?? '',
+      factoryConverterAnnotationsDisabled:
+          json['factory_converter_annotations_disabled'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$ClassConfigItemToJson(ClassConfigItem instance) =>
+    <String, dynamic>{
+      'class_name': instance.className,
+      'default_chopper_client_converter':
+          instance.defaultChopperClientConverter,
+      'factory_converter_annotations_disabled':
+          instance.factoryConverterAnnotationsDisabled,
     };
