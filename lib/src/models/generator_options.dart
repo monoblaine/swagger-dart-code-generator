@@ -45,6 +45,7 @@ class GeneratorOptions {
     this.customRequestConverterRules = const <CustomRequestConverterRule>[],
     this.swaggerFileExtraImports = const <String>[],
     this.classConfigs = const <ClassConfigItem>[],
+    this.defaultInterceptors = const <String>[],
   });
 
   /// Build options from a JSON map.
@@ -89,6 +90,7 @@ class GeneratorOptions {
   final List<CustomRequestConverterRule> customRequestConverterRules;
   final List<String> swaggerFileExtraImports;
   final List<ClassConfigItem> classConfigs;
+  final List<String> defaultInterceptors;
 
   /// Convert this options instance to JSON.
   Map<String, dynamic> toJson() => _$GeneratorOptionsToJson(this);
