@@ -108,6 +108,10 @@ GeneratorOptions _$GeneratorOptionsFromJson(Map json) => GeneratorOptions(
                   ClassConfigItem.fromJson(Map<String, dynamic>.from(e as Map)))
               .toList() ??
           const <ClassConfigItem>[],
+      defaultInterceptors: (json['default_interceptors'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
     );
 
 Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
@@ -150,6 +154,7 @@ Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
       'custom_request_converter_rules': instance.customRequestConverterRules,
       'swagger_file_extra_imports': instance.swaggerFileExtraImports,
       'class_configs': instance.classConfigs,
+      'default_interceptors': instance.defaultInterceptors,
     };
 
 DefaultValueMap _$DefaultValueMapFromJson(Map<String, dynamic> json) =>
