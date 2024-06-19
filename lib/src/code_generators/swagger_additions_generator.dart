@@ -41,7 +41,7 @@ final Map<Type, Object Function(Map<String, dynamic>)> $mappingVariableName = {
     ..addEntries(json.keys.map((key) => MapEntry(key, json[key] as String)))
 };
 
-const List<Interceptor>? defaultInterceptors = [
+const List<Interceptor> defaultInterceptors = [
   HeadersInterceptor({
     'Cache-Control': 'no-cache',
     'User-Agent': 'Alangoya',
