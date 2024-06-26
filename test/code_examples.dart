@@ -813,7 +813,30 @@ const requestWithEnum = '''
 }
 ''';
 
-const objectWithadditionalProperties = '''
+const objectWithadditionalProperties1_1 = '''
+{
+  "components" : {
+    "schemas" : {
+      "FooDto": {
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
+''';
+
+const objectWithadditionalProperties1_2 = '''
 {
   "components" : {
     "schemas" : {
@@ -824,6 +847,77 @@ const objectWithadditionalProperties = '''
             "type": "object",
             "additionalProperties": {
               "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
+''';
+
+const objectWithadditionalProperties2_1 = '''
+{
+  "components" : {
+    "schemas" : {
+      "Foo1Dto": {
+        "type": "object",
+        "properties": {
+          "someProp": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Foo2Dto": {
+        "type": "object",
+        "properties": {
+          "fooMap": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "\$ref": "#/components/schemas/Foo1Dto"
+              },
+              "nullable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
+''';
+
+const objectWithadditionalProperties2_2 = '''
+{
+  "components" : {
+    "schemas" : {
+      "Foo1Dto": {
+        "type": "object",
+        "properties": {
+          "someProp": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Foo2Dto": {
+        "type": "object",
+        "properties": {
+          "fooMap": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "\$ref": "#/components/schemas/Foo1Dto"
+              }
             },
             "nullable": true
           }

@@ -29,7 +29,6 @@ const kBasicSwaggerTypes = [
 ];
 
 const kMap = 'Map';
-const kMapStringDynamic = 'Map<String,dynamic>';
 const kRequired = 'required';
 
 const kChopperService = 'ChopperService';
