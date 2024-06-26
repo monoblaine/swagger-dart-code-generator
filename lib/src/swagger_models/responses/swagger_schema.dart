@@ -22,7 +22,7 @@ class SwaggerSchema {
     this.description = '',
     this.enumNames,
     this.isNullable,
-    this.hasAdditionalProperties = false,
+    this.additionalProperties,
     this.msEnum,
     this.title = '',
     this.readOnly = false,
@@ -125,8 +125,12 @@ class SwaggerSchema {
   @JsonKey(name: 'allOf')
   List<SwaggerSchema> allOf;
 
-  @JsonKey(name: 'additionalProperties', fromJson: _additionalsFromJson)
-  bool hasAdditionalProperties;
+  @JsonKey(name: 'additionalProperties')
+  dynamic additionalProperties;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  bool get hasAdditionalProperties =>
+      additionalProperties != null && additionalProperties != false;
 
   List<String>? enumNames;
 
@@ -142,8 +146,6 @@ class SwaggerSchema {
     if (enumNames != null) kEnumNames: enumNames,
   };
 }
-
-bool _additionalsFromJson(dynamic value) => value != false;
 
 List<String> _requiredFromJson(dynamic value) {
   if (value is List) {
