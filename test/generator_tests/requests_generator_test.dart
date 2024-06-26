@@ -53,4 +53,23 @@ void main() {
           contains('Future<chopper.Response<CarModel>> carsMultipartPost'));
     });
   });
+
+  test('Should generate string map type (3)', () {
+    final root2 = SwaggerRoot.parse(fooService);
+    final result = SwaggerRequestsGenerator(GeneratorOptions(
+      inputFolder: '',
+      outputFolder: '',
+      ignoreHeaders: true,
+    )).generate(
+      swaggerRoot: root2,
+      className: 'FooService',
+      fileName: 'foo_service',
+      allEnums: [],
+    );
+
+    expect(
+        result,
+        contains(
+            'Future<chopper.Response<Map<String,String>>> modelItemsGet()'));
+  });
 }

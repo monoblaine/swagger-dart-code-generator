@@ -1366,6 +1366,17 @@ class SwaggerRequestsGenerator extends SwaggerGeneratorBase {
         return getValidatedClassName('$pathText$requestText\$Response');
       }
 
+      if (contentSchemaType == kObject &&
+          contentSchema!.hasAdditionalProperties) {
+        final additionalProperties =
+            contentSchema.additionalProperties as Map<String, dynamic>;
+        final mapValueTypeInfo = SwaggerSchema.fromJson(additionalProperties);
+        final mapValueTypeName = kBasicTypesMap[mapValueTypeInfo.type];
+        if (mapValueTypeName != null) {
+          return 'Map<String,${(mapValueTypeInfo.isNullable ?? false ? '$mapValueTypeName?' : mapValueTypeName)}>';
+        }
+      }
+
       return kBasicTypesMap[contentSchemaType];
     }
 
