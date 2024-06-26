@@ -44,7 +44,7 @@ final Map<Type, Object Function(Map<String, dynamic>)> $mappingVariableName = {
 const Iterable<dynamic> defaultInterceptors = [
   HeadersInterceptor({
     'Cache-Control': 'no-cache',
-    'User-Agent': 'Alangoya',
+    ${(options.userAgentHeaderValue.isEmpty ? '' : "'User-Agent': '${options.userAgentHeaderValue}',")}
     'Connection': 'keep-alive',
     ${(options.authorizationHeaderValue.isEmpty ? '' : "'Authorization': '${options.authorizationHeaderValue}',")}
     'Accept-Language': 'tr,en-US;q=0.9,en;q=0.8',

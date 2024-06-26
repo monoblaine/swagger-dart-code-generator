@@ -39,6 +39,7 @@ class GeneratorOptions {
     this.multipartFileType = 'List<int>',
     this.urlencodedFileType = 'Map<String, String>',
     this.generateFirstSucceedResponse = true,
+    this.userAgentHeaderValue = '',
     this.authorizationHeaderValue = '',
     this.customRequestConverterRules = const <CustomRequestConverterRule>[],
     this.swaggerFileExtraImports = const <String>[],
@@ -83,6 +84,7 @@ class GeneratorOptions {
   final List<String> importPaths;
   final String customReturnType;
   final List<String> excludePaths;
+  final String userAgentHeaderValue;
   final String authorizationHeaderValue;
   final List<CustomRequestConverterRule> customRequestConverterRules;
   final List<String> swaggerFileExtraImports;

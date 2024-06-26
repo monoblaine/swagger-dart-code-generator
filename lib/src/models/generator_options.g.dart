@@ -90,6 +90,7 @@ GeneratorOptions _$GeneratorOptionsFromJson(Map json) => GeneratorOptions(
           json['urlencoded_file_type'] as String? ?? 'Map<String, String>',
       generateFirstSucceedResponse:
           json['generate_first_succeed_response'] as bool? ?? true,
+      userAgentHeaderValue: json['user_agent_header_value'] as String? ?? '',
       authorizationHeaderValue:
           json['authorization_header_value'] as String? ?? '',
       customRequestConverterRules:
@@ -150,6 +151,7 @@ Map<String, dynamic> _$GeneratorOptionsToJson(GeneratorOptions instance) =>
       'import_paths': instance.importPaths,
       'custom_return_type': instance.customReturnType,
       'exclude_paths': instance.excludePaths,
+      'user_agent_header_value': instance.userAgentHeaderValue,
       'authorization_header_value': instance.authorizationHeaderValue,
       'custom_request_converter_rules': instance.customRequestConverterRules,
       'swagger_file_extra_imports': instance.swaggerFileExtraImports,
