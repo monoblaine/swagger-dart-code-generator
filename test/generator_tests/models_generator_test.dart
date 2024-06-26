@@ -619,8 +619,8 @@ void main() {
   });
 
   group('Tests for additionalProperties', () {
-    test('Should generate dynamic map type', () {
-      final map = SwaggerRoot.parse(objectWithadditionalProperties);
+    test('Should generate string map type (1)', () {
+      final map = SwaggerRoot.parse(objectWithadditionalProperties1_1);
 
       final result = generator.generate(
         root: map,
@@ -628,7 +628,43 @@ void main() {
         allEnums: [],
       );
 
-      expect(result, contains('final Map<String,dynamic>? metadata'));
+      expect(result, contains('final Map<String,String?>? metadata'));
+    });
+
+    test('Should generate string map type (2)', () {
+      final map = SwaggerRoot.parse(objectWithadditionalProperties1_2);
+
+      final result = generator.generate(
+        root: map,
+        fileName: 'fileName',
+        allEnums: [],
+      );
+
+      expect(result, contains('final Map<String,String>? metadata'));
+    });
+
+    test('Should generate complex map type (1)', () {
+      final map = SwaggerRoot.parse(objectWithadditionalProperties2_1);
+
+      final result = generator.generate(
+        root: map,
+        fileName: 'fileName',
+        allEnums: [],
+      );
+
+      expect(result, contains('final Map<String,List<Foo1Dto>?>? fooMap'));
+    });
+
+    test('Should generate complex map type (2)', () {
+      final map = SwaggerRoot.parse(objectWithadditionalProperties2_2);
+
+      final result = generator.generate(
+        root: map,
+        fileName: 'fileName',
+        allEnums: [],
+      );
+
+      expect(result, contains('final Map<String,List<Foo1Dto>>? fooMap'));
     });
   });
 }

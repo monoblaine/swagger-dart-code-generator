@@ -407,6 +407,21 @@ abstract class SwaggerModelsGenerator extends SwaggerGeneratorBase {
       case 'number':
         return 'double';
       case 'object':
+        if (parameter.hasAdditionalProperties) {
+          final additionalProperties =
+              parameter.additionalProperties as Map<String, dynamic>;
+          final mapValueTypeInfo = SwaggerSchema.fromJson(additionalProperties);
+          final mapValueTypeName = getParameterTypeName(
+            className,
+            parameterName,
+            mapValueTypeInfo,
+            modelPostfix,
+            null,
+          );
+          return mapValueTypeInfo.isNullable ?? false
+              ? '$mapValueTypeName?'
+              : mapValueTypeName;
+        }
         return 'Object';
       case 'array':
         final items = parameter.items;
@@ -1051,7 +1066,14 @@ static $returnType $fromJsonFunction($valueType? value) => $enumNameCamelCase$fr
     var typeName = '';
 
     if (prop.hasAdditionalProperties && prop.type == 'object') {
-      typeName = kMapStringDynamic;
+      final mapValueTypeName = getParameterTypeName(
+        className,
+        propertyKey,
+        prop,
+        options.modelPostfix,
+        null,
+      );
+      typeName = 'Map<String,$mapValueTypeName>';
     } else if (prop.hasRef) {
       typeName = prop.ref.split('/').last.pascalCase + options.modelPostfix;
     } else {
