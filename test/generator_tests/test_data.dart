@@ -832,3 +832,31 @@ const carsService = '''
     }
 }
 ''';
+
+const String fooService = '''
+{
+  "swagger": "2.0",
+  "paths": {
+    "/model/items": {
+      "get": {
+        "summary": "Some test request",
+        "operationId": "getModelItems",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+''';
