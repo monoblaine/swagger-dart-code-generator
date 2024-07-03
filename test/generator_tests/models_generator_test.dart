@@ -127,6 +127,54 @@ void main() {
 
       expect(result, contains(expectedResult));
     });
+
+    test('Should return DateTime (ymd)', () {
+      final prop = SwaggerSchema(type: 'string', format: 'date');
+      const propertyName = 'someDate';
+      const propertyKey = 'SomeDate';
+      const className = 'Foo';
+      const jsonKeyExpectedResult =
+          "\t@JsonKey(name: 'SomeDate', toJson: _dateToJson)\n";
+      const fieldExpectedResult = 'final DateTime? someDate;';
+      final result = generator2.generateGeneralPropertyContent(
+        propertyName: propertyName,
+        propertyKey: propertyKey,
+        className: className,
+        defaultValues: [],
+        prop: prop,
+        allEnumNames: [],
+        allEnumListNames: [],
+        requiredProperties: [],
+        isDeprecated: false,
+      );
+
+      expect(result, contains(jsonKeyExpectedResult));
+      expect(result, contains(fieldExpectedResult));
+    });
+
+    test('Should return DateTime (dmy)', () {
+      final prop = SwaggerSchema(type: 'string', format: 'date2');
+      const propertyName = 'someDate';
+      const propertyKey = 'SomeDate';
+      const className = 'Foo';
+      const jsonKeyExpectedResult =
+          "\t@JsonKey(name: 'SomeDate', toJson: _dateToJsonDmy)\n";
+      const fieldExpectedResult = 'final DateTime? someDate;';
+      final result = generator2.generateGeneralPropertyContent(
+        propertyName: propertyName,
+        propertyKey: propertyKey,
+        className: className,
+        defaultValues: [],
+        prop: prop,
+        allEnumNames: [],
+        allEnumListNames: [],
+        requiredProperties: [],
+        isDeprecated: false,
+      );
+
+      expect(result, contains(jsonKeyExpectedResult));
+      expect(result, contains(fieldExpectedResult));
+    });
   });
 
   group('generateFieldName', () {
