@@ -175,6 +175,30 @@ void main() {
       expect(result, contains(jsonKeyExpectedResult));
       expect(result, contains(fieldExpectedResult));
     });
+
+    test('Should return DateTime (dmySlashed)', () {
+      final prop = SwaggerSchema(type: 'string', format: 'date3');
+      const propertyName = 'someDate';
+      const propertyKey = 'SomeDate';
+      const className = 'Foo';
+      const jsonKeyExpectedResult =
+          "\t@JsonKey(name: 'SomeDate', toJson: _dateToJsonDmySlashed)\n";
+      const fieldExpectedResult = 'final DateTime? someDate;';
+      final result = generator2.generateGeneralPropertyContent(
+        propertyName: propertyName,
+        propertyKey: propertyKey,
+        className: className,
+        defaultValues: [],
+        prop: prop,
+        allEnumNames: [],
+        allEnumListNames: [],
+        requiredProperties: [],
+        isDeprecated: false,
+      );
+
+      expect(result, contains(jsonKeyExpectedResult));
+      expect(result, contains(fieldExpectedResult));
+    });
   });
 
   group('generateFieldName', () {

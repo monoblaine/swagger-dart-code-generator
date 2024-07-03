@@ -397,7 +397,7 @@ abstract class SwaggerModelsGenerator extends SwaggerGeneratorBase {
         return 'bool';
       case 'string':
         return switch (parameter.format) {
-          'date-time' || 'date' || 'date2' => 'DateTime',
+          'date-time' || 'date' || 'date2' || 'date3' => 'DateTime',
           _ => parameter.isEnum
               ? 'enums.${getValidatedClassName(generateEnumName(getValidatedClassName(className), parameterName))}'
               : 'String'
@@ -602,12 +602,16 @@ static $returnType $fromJsonFunction($valueType? value) => $enumNameCamelCase$fr
     final format = map.format.toLowerCase();
 
     final isDate = type == kString &&
-        switch (format) { 'date' || 'date2' => true, _ => false };
+        switch (format) { 'date' || 'date2' || 'date3' => true, _ => false };
 
     if (isDate) {
       return format.length == 4
           ? ', toJson: _dateToJson'
-          : ', toJson: _dateToJsonDmy';
+          : switch (format) {
+              'date2' => ', toJson: _dateToJsonDmy',
+              'date3' => ', toJson: _dateToJsonDmySlashed',
+              _ => throw UnimplementedError(),
+            };
     }
 
     return '';
