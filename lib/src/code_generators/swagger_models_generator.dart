@@ -400,14 +400,14 @@ abstract class SwaggerModelsGenerator extends SwaggerGeneratorBase {
         final scalar = options.scalars[parameter.format];
         if (scalar != null) {
           return scalar.type;
-        } else if (parameter.format == 'date-time' ||
-                   parameter.format == 'date' ||
-                   parameter.format == 'date2') {
-          return 'DateTime';
-        } else if (parameter.isEnum) {
-          return 'enums.${getValidatedClassName(generateEnumName(getValidatedClassName(className), parameterName))}';
+        } else {
+          return switch (parameter.format) {
+            'date-time' || 'date' || 'date2' => 'DateTime',
+            _ => parameter.isEnum
+                ? 'enums.${getValidatedClassName(generateEnumName(getValidatedClassName(className), parameterName))}'
+                : 'String'
+          };
         }
-        return 'String';
       case 'Date':
         return 'DateTime';
       case 'number':
