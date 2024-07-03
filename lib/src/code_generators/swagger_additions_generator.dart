@@ -150,7 +150,7 @@ String? _dateToJsonDmy(DateTime? date) => _dateToJsonImpl(date, true);
 String? _dateToJsonDmySlashed(DateTime? date) => _dateToJsonImpl(date, true, '/');
 
 // ignore: unused_element, avoid_positional_boolean_parameters
-String? _dateToJsonImpl(DateTime? date, bool isDmy, String separator = '-') {
+String? _dateToJsonImpl(DateTime? date, bool isDmy, [String separator = '-']) {
   if(date == null)
   {
     return null;
