@@ -400,7 +400,9 @@ abstract class SwaggerModelsGenerator extends SwaggerGeneratorBase {
         final scalar = options.scalars[parameter.format];
         if (scalar != null) {
           return scalar.type;
-        } else if (parameter.format == 'date-time' || parameter.format == 'date') {
+        } else if (parameter.format == 'date-time' ||
+                   parameter.format == 'date' ||
+                   parameter.format == 'date2') {
           return 'DateTime';
         } else if (parameter.isEnum) {
           return 'enums.${getValidatedClassName(generateEnumName(getValidatedClassName(className), parameterName))}';
@@ -640,10 +642,13 @@ static $returnType $fromJsonFunction($valueType? value) => $enumNameCamelCase$fr
     final type = map.type.toLowerCase();
     final format = map.format.toLowerCase();
 
-    final isDate = type == kString && format == 'date';
+    final isDate = type == kString &&
+        switch (format) { 'date' || 'date2' => true, _ => false };
 
     if (isDate) {
-      return ', toJson: _dateToJson';
+      return format.length == 4
+          ? ', toJson: _dateToJson'
+          : ', toJson: _dateToJsonDmy';
     }
 
     return '';

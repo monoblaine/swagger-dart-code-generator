@@ -142,7 +142,13 @@ ${options.overrideToString ? "import 'dart:convert';" : ''}
   String generateDateToJson() {
     return '''
 // ignore: unused_element
-String? _dateToJson(DateTime? date) {
+String? _dateToJson(DateTime? date) => _dateToJsonImpl(date, false);
+
+// ignore: unused_element
+String? _dateToJsonDmy(DateTime? date) => _dateToJsonImpl(date, true);
+
+// ignore: unused_element, avoid_positional_boolean_parameters
+String? _dateToJsonImpl(DateTime? date, bool isDmy) {
   if(date == null)
   {
     return null;
@@ -152,7 +158,7 @@ String? _dateToJson(DateTime? date) {
   final month = date.month < 10 ? '0\${date.month}' : date.month.toString();
   final day = date.day < 10 ? '0\${date.day}' : date.day.toString();
 
-  return '\$year-\$month-\$day';
+  return isDmy ? '\$day-\$month-\$year' : '\$year-\$month-\$day';
   }
 
   class Wrapped<T> {
